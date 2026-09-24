@@ -16,3 +16,5 @@ Rotas: `/login` e `/dashboard/*` (protegida):
 - `/dashboard/produtos` — produtos, planos e cadastro
 
 O token JWT fica no `localStorage` (`axis-auth`); um 401 da API faz logout automático.
+
+(test de build)
