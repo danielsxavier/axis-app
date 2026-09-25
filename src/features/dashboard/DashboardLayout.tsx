@@ -2,17 +2,21 @@ import clsx from 'clsx';
 import { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuthStore } from '@/store/auth';
+import { useAdminConfig } from '@/lib/useAdminConfig';
 
 const NAV = [
   { to: '/dashboard', label: 'Visão Geral', end: true },
   { to: '/dashboard/assinaturas', label: 'Assinaturas' },
   { to: '/dashboard/contas-a-receber', label: 'Contas a Receber' },
   { to: '/dashboard/produtos', label: 'Produtos e Planos' },
+  { to: '/dashboard/monitoramento', label: 'Monitoramento' },
 ];
 
 export function DashboardLayout() {
   const { admin, logout } = useAuthStore();
   const [menuOpen, setMenuOpen] = useState(false);
+  // Carregado uma vez ao abrir o painel; o cache do React Query serve as outras telas.
+  const isSandbox = useAdminConfig().data?.environment === 'sandbox';
 
   const nav = (
     <nav className="flex flex-col gap-1">
@@ -48,6 +52,11 @@ export function DashboardLayout() {
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600 font-bold text-white">A</div>
             <span className="font-semibold">Axis</span>
+            {isSandbox && (
+              <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-950 dark:text-amber-200">
+                Sandbox
+              </span>
+            )}
           </div>
           <button
             className="rounded-lg px-2 py-1 text-sm text-slate-600 hover:bg-slate-100 dark:text-neutral-300 dark:hover:bg-neutral-800 md:hidden"

@@ -91,7 +91,7 @@ export interface AccountsReceivableResponse {
 export interface AdminSubscription {
   id: string;
   status: SubscriptionStatus;
-  customer: { id: string; name: string; email: string; externalRef: string };
+  customer: { id: string; name: string; email: string; externalRef: string; asaasCustomerId: string | null };
   product: { id: string; slug: string; name: string };
   plan: { id: string; name: string; price: number };
   trialEndsAt: string | null;
@@ -128,4 +128,33 @@ export interface DiscountGrant {
 export interface AdminSubscriptionDetail extends AdminSubscription {
   payments: SubscriptionPayment[];
   discountGrants: DiscountGrant[];
+}
+
+export interface AdminConfig {
+  environment: 'sandbox' | 'production';
+}
+
+export interface EndTrialNowResponse extends AdminSubscription {
+  value: number;
+  discountPercentage: number | null;
+  firstPayment: SubscriptionPayment | null;
+}
+
+export type MonitorStatus = 'UP' | 'DOWN';
+
+export interface MonitoredService {
+  id: string;
+  name: string;
+  url: string;
+  expectedStatus: number;
+  timeoutMs: number;
+  isActive: boolean;
+  lastCheckedAt: string | null;
+  lastStatus: MonitorStatus | null;
+  lastLatencyMs: number | null;
+  lastHttpStatus: number | null;
+  /** "TIMEOUT" ou a mensagem do erro de rede, quando não houve resposta HTTP. */
+  lastError: string | null;
+  createdAt: string;
+  updatedAt: string;
 }

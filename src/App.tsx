@@ -6,6 +6,7 @@ import { OverviewPage } from '@/features/overview/OverviewPage';
 import { SubscriptionsPage } from '@/features/subscriptions/SubscriptionsPage';
 import { ReceivablesPage } from '@/features/receivables/ReceivablesPage';
 import { ProductsPage } from '@/features/products/ProductsPage';
+import { MonitoringPage } from '@/features/monitoring/MonitoringPage';
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="assinaturas" element={<SubscriptionsPage />} />
         <Route path="contas-a-receber" element={<ReceivablesPage />} />
         <Route path="produtos" element={<ProductsPage />} />
+        <Route path="monitoramento" element={<MonitoringPage />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
