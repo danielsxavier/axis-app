@@ -16,7 +16,13 @@ export interface Plan {
   id: string;
   productId: string;
   name: string;
+  /** Preço normal. */
   price: number;
+  promotionalPrice: number | null;
+  promotionalPriceExpiresAt: string | null;
+  /** Preço cobrado de quem converter o trial agora (calculado pela API). */
+  effectivePrice: number;
+  hasActivePromotion: boolean;
   billingInterval: 'MONTHLY' | 'ANNUAL' | 'WEEKLY';
   isActive: boolean;
   createdAt: string;
@@ -93,7 +99,7 @@ export interface AdminSubscription {
   status: SubscriptionStatus;
   customer: { id: string; name: string; email: string; externalRef: string; asaasCustomerId: string | null };
   product: { id: string; slug: string; name: string };
-  plan: { id: string; name: string; price: number };
+  plan: Plan;
   trialEndsAt: string | null;
   currentPeriodEnd: string | null;
   canceledAt: string | null;
