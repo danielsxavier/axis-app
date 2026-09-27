@@ -100,6 +100,8 @@ export interface AdminSubscription {
   customer: { id: string; name: string; email: string; externalRef: string; asaasCustomerId: string | null };
   product: { id: string; slug: string; name: string };
   plan: Plan;
+  /** Preço efetivo desta assinatura: promoção vigente do plano + desconto de assinatura vigente. */
+  effectivePrice: number;
   trialEndsAt: string | null;
   currentPeriodEnd: string | null;
   canceledAt: string | null;

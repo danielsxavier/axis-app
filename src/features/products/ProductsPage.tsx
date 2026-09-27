@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState, type FormEvent } from 'react';
+import { Price } from '@/components/Price';
 import { Button, Card, ErrorText, Field, Input, Loading, PageHeader, QueryError } from '@/components/ui';
 import { api, getApiErrorMessage } from '@/lib/api';
 import { formatCurrency, formatDate, todayKey } from '@/lib/format';
@@ -148,18 +149,15 @@ function PlanRow({ plan }: { plan: Plan }) {
 }
 
 function PlanPrice({ plan }: { plan: Plan }) {
-  if (!plan.hasActivePromotion || plan.promotionalPrice === null) {
-    return <p className="tabular mt-0.5 text-slate-600 dark:text-neutral-300">{formatCurrency(plan.price)}/mês</p>;
-  }
+  const promo = plan.hasActivePromotion && plan.promotionalPrice !== null;
   return (
-    <p className="tabular mt-0.5">
-      <span className="font-semibold text-green-700 dark:text-green-400">{formatCurrency(plan.effectivePrice)}/mês</span>{' '}
-      <span className="text-slate-500 dark:text-neutral-400">
-        de <s>{formatCurrency(plan.price)}</s>
-      </span>{' '}
-      <span className="text-xs text-slate-500 dark:text-neutral-400">
-        Válido até {formatDate(plan.promotionalPriceExpiresAt)}
-      </span>
+    <p className="mt-0.5">
+      <Price
+        price={plan.price}
+        effectivePrice={promo ? plan.effectivePrice : plan.price}
+        note={promo && `Válido até ${formatDate(plan.promotionalPriceExpiresAt)}`}
+        className={promo ? undefined : 'text-slate-600 dark:text-neutral-300'}
+      />
     </p>
   );
 }

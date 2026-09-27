@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState, type FormEvent } from 'react';
 import { CopyButton } from '@/components/CopyButton';
+import { Price } from '@/components/Price';
 import { PaymentStatusBadge, SubscriptionStatusBadge } from '@/components/StatusBadge';
 import { Button, ErrorText, Field, Input, Loading, Modal, QueryError } from '@/components/ui';
 import { api, getApiErrorMessage } from '@/lib/api';
@@ -54,7 +55,7 @@ export function SubscriptionDetailModal({
             </Info>
             <Info label="Produto">{sub.product.name}</Info>
             <Info label="Plano">
-              {sub.plan.name} · {formatCurrency(sub.plan.price)}/mês
+              {sub.plan.name} · <Price price={sub.plan.price} effectivePrice={sub.effectivePrice} />
             </Info>
             <Info label="E-mail">{sub.customer.email}</Info>
             <Info label="Ref. no produto">

@@ -1,9 +1,10 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
+import { Price } from '@/components/Price';
 import { SubscriptionStatusBadge } from '@/components/StatusBadge';
 import { Button, Card, Loading, PageHeader, QueryError, Select } from '@/components/ui';
 import { api } from '@/lib/api';
-import { formatCurrency, formatDate } from '@/lib/format';
+import { formatDate } from '@/lib/format';
 import { SUBSCRIPTION_STATUSES, SUBSCRIPTION_STATUS_LABEL } from '@/lib/subscriptionStatus';
 import type { PaginatedSubscriptions, SubscriptionStatus } from '@/types/api';
 import { useProducts } from '../products/useProducts';
@@ -113,9 +114,11 @@ export function SubscriptionsPage() {
                     <td className="px-4 py-3">{sub.product.name}</td>
                     <td className="px-4 py-3">
                       {sub.plan.name}
-                      <span className="tabular block text-xs text-slate-500 dark:text-neutral-400">
-                        {formatCurrency(sub.plan.price)}/mês
-                      </span>
+                      <Price
+                        price={sub.plan.price}
+                        effectivePrice={sub.effectivePrice}
+                        className="block text-xs text-slate-500 dark:text-neutral-400"
+                      />
                     </td>
                     <td className="px-4 py-3">
                       <SubscriptionStatusBadge status={sub.status} />
