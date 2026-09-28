@@ -5,6 +5,7 @@ import { Button, Card, ErrorText, Field, Input, Loading, PageHeader, QueryError 
 import { api, getApiErrorMessage } from '@/lib/api';
 import { formatCurrency, formatDate, todayKey } from '@/lib/format';
 import type { Plan, Product } from '@/types/api';
+import { SmtpConfigSection } from './SmtpConfigSection';
 import { useProducts } from './useProducts';
 
 export function ProductsPage() {
@@ -40,6 +41,7 @@ export function ProductsPage() {
 
 function ProductCard({ product }: { product: Product }) {
   const [addingPlan, setAddingPlan] = useState(false);
+  const [showSmtp, setShowSmtp] = useState(false);
 
   return (
     <Card>
@@ -51,11 +53,16 @@ function ProductCard({ product }: { product: Product }) {
           <p className="break-all text-xs text-slate-500 dark:text-neutral-400">Webhook: {product.webhookUrl}</p>
           <p className="break-all text-xs text-slate-500 dark:text-neutral-400">ID: {product.id}</p>
         </div>
-        {!addingPlan && (
-          <Button variant="secondary" onClick={() => setAddingPlan(true)}>
-            Novo plano
+        <div className="flex flex-wrap gap-2">
+          <Button variant="ghost" aria-expanded={showSmtp} onClick={() => setShowSmtp(!showSmtp)}>
+            {showSmtp ? 'Ocultar e-mail (SMTP)' : 'E-mail (SMTP)'}
           </Button>
-        )}
+          {!addingPlan && (
+            <Button variant="secondary" onClick={() => setAddingPlan(true)}>
+              Novo plano
+            </Button>
+          )}
+        </div>
       </div>
 
       <div className="mt-4">
@@ -71,6 +78,7 @@ function ProductCard({ product }: { product: Product }) {
       </div>
 
       {addingPlan && <NewPlanForm productId={product.id} onDone={() => setAddingPlan(false)} />}
+      {showSmtp && <SmtpConfigSection productId={product.id} />}
     </Card>
   );
 }

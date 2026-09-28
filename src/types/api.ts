@@ -37,6 +37,23 @@ export interface Product {
   plans: Plan[];
 }
 
+/** Configuração de SMTP de um produto (a senha nunca vem da API). */
+export interface SmtpConfig {
+  host: string;
+  port: number;
+  secure: boolean;
+  username: string;
+  hasPassword: boolean;
+  fromEmail: string;
+  fromName: string;
+  updatedAt: string;
+}
+
+export interface SmtpTestResult {
+  success: boolean;
+  error?: string;
+}
+
 export interface ProductMrr {
   productId: string;
   productSlug: string;
